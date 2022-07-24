@@ -1,0 +1,26 @@
+.board {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.word {
+    border: 1px solid red;
+    height: 2rem;
+    width: 17.5rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.word-letter {
+    border: 1px solid blue;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
