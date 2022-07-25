@@ -8,8 +8,8 @@ export default function Board({ guesses, wordToGuess }) {
         <div className={styles['board']}>
             {guesses && guesses.map((guess, index) => (
                 <div className={styles['word']} key={`word-${index}`}>
-                    {guess.map((letter, index) => (
-                        <Cell letter={letter} index={index} key={`word-letter-${letter}-${index}`} />
+                    {guess.map(({key, color}, index) => (
+                        <Cell letter={key} color={color} index={index} key={`word-letter-${key}-${index}`} />
                     ))}
                 </div>
             ))}
