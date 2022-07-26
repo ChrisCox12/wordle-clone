@@ -6,23 +6,38 @@
 
 
 .word {
-    border: 1px solid red;
-    height: 2rem;
-    width: 17.5rem;
-    margin-bottom: 0.5rem;
+    /* border: 1px solid red; */
+    height: 2.5rem;
+    width: 18.5rem;
+    margin-bottom: 0.75rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1rem;
+    gap: 0.5rem;
 }
 
 .word-letter {
     color: white;
     font-weight: bold;
-    border: 1px solid blue;
+    font-size: 1.125rem;
+    border: 2px solid blue;
+    border-radius: 15%;
     height: 100%;
     width: 100%;
     display: flex;
     align-items: center;
+    justify-content: center;
+}
+
+.keyboard {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    width: 100%;
+}
+
+.keyboard > div {
+    display: flex;
+    gap: 0.125rem;
     justify-content: center;
 }

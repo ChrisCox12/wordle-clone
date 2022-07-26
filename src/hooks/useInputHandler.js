@@ -1,18 +1,20 @@
 import { useEffect, useState } from 'react';
 
 export default function useInputHandler(wordToGuess) {
-    const [guesses, setGuesses] = useState([
+    const INITIAL_GUESSES = [
         [{key: '', color: ''}, {key: '', color: ''}, {key: '', color: ''}, {key: '', color: ''}, {key: '', color: ''}],
         [{key: '', color: ''}, {key: '', color: ''}, {key: '', color: ''}, {key: '', color: ''}, {key: '', color: ''}],
         [{key: '', color: ''}, {key: '', color: ''}, {key: '', color: ''}, {key: '', color: ''}, {key: '', color: ''}],
         [{key: '', color: ''}, {key: '', color: ''}, {key: '', color: ''}, {key: '', color: ''}, {key: '', color: ''}],
         [{key: '', color: ''}, {key: '', color: ''}, {key: '', color: ''}, {key: '', color: ''}, {key: '', color: ''}],
         [{key: '', color: ''}, {key: '', color: ''}, {key: '', color: ''}, {key: '', color: ''}, {key: '', color: ''}]
-    ]);
+    ];
+    const [guesses, setGuesses] = useState(INITIAL_GUESSES);
     const [currentGuessRow, setCurrentGuessRow] = useState(0);
     const [currentGuessIndex, setCurrentGuessIndex] = useState(0);
     const [currentGuess, setCurrentGuess] = useState('');
     const [isGameOver, setIsGameOver] = useState(false);
+    const [currentGuessNumber, setCurrentGuessNumber] = useState(0);
 
 
     const handleGuessInput = ({ key }) => {
@@ -32,32 +34,28 @@ export default function useInputHandler(wordToGuess) {
                 if(currentGuess.toUpperCase() === wordToGuess.toUpperCase()) {
                     setIsGameOver(true);
                 }
-                else {
-                    // map over the guess and evaluate it
-                    rowCopy.map((pair, index) => {
-                        if(pair.key === wordToGuessCopy[index] && pair.color === '') {
-                            pair.color = 'darkgreen';
-                        }
-                        else if(wordToGuessCopy.includes(pair.key)) {
-                            pair.color = 'goldenrod';
-                        }
-                        else {
-                            pair.color = 'grey';
-                        }
-
-                        return pair;
-                    });
-                }
-
                 
+                // map over the guess and evaluate it
+                rowCopy.map((pair, index) => {
+                    if(pair.key === wordToGuessCopy[index] && pair.color === '') {
+                        pair.color = 'darkgreen';
+                    }
+                    else if(wordToGuessCopy.includes(pair.key)) {
+                        pair.color = 'goldenrod';
+                    }
+                    else {
+                        pair.color = 'grey';
+                    }
 
-
-
+                    return pair;
+                });
+                
                 
                 copy[currentGuessRow] = rowCopy;
                 setCurrentGuessRow(prev => prev + 1);
                 setCurrentGuessIndex(0);
                 setCurrentGuess('');
+                if(!isGameOver) setCurrentGuessNumber(prev => prev + 1);
                 //console.log(copy)
             }
         }
@@ -74,5 +72,5 @@ export default function useInputHandler(wordToGuess) {
     }
 
 
-    return { guesses, currentGuessIndex, handleGuessInput, currentGuess, isGameOver };
+    return { guesses, currentGuessIndex, handleGuessInput, currentGuess, isGameOver, currentGuessNumber };
 }

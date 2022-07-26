@@ -25,7 +25,7 @@ export default function App() {
     const [currentGuessRow, setCurrentGuessRow] = useState(0);
     const [currentGuessIndex, setCurrentGuessIndex] = useState(0); */
     //const [gameOver, setGameOver] = useState(false);
-    const { handleGuessInput, guesses, currentGuessIndex, currentGuess, isGameOver } = useInputHandler(wordToGuess); 
+    const { handleGuessInput, guesses, currentGuessIndex, currentGuess, isGameOver, currentGuessNumber } = useInputHandler(wordToGuess); 
 
 
     useEffect(() => {
@@ -83,7 +83,7 @@ export default function App() {
     return (
         <div className="App" style={{ backgroundColor: 'darksalmon', height: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <Typography component='h1' variant='h3' textAlign='center'>Wordle clone</Typography>
-            <Typography fontSize='1.75rem' textAlign='center'>{`${currentGameNumber} ${MAX_GUESSES - guessesLeft}/${MAX_GUESSES}`}</Typography>
+            <Typography fontSize='1.75rem' textAlign='center'>{`${currentGameNumber} ${currentGuessNumber}/${MAX_GUESSES}`}</Typography>
             
             {wordToGuess && <div>{wordToGuess}</div>}
 
