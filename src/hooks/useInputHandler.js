@@ -15,6 +15,7 @@ export default function useInputHandler(wordToGuess) {
     const [currentGuess, setCurrentGuess] = useState('');
     const [isGameOver, setIsGameOver] = useState(false);
     const [currentGuessNumber, setCurrentGuessNumber] = useState(0);
+    const [prevGuess, setPrevGuess] = useState([]);
 
 
     const handleGuessInput = ({ key }) => {
@@ -44,7 +45,7 @@ export default function useInputHandler(wordToGuess) {
                         pair.color = 'goldenrod';
                     }
                     else {
-                        pair.color = 'grey';
+                        pair.color = 'gray';
                     }
 
                     return pair;
@@ -56,7 +57,9 @@ export default function useInputHandler(wordToGuess) {
                 setCurrentGuessIndex(0);
                 setCurrentGuess('');
                 if(!isGameOver) setCurrentGuessNumber(prev => prev + 1);
+                //rowCopy.forEach(letter => checkHistory(letter))
                 //console.log(copy)
+                setPrevGuess(rowCopy);
             }
         }
         else {
@@ -72,5 +75,5 @@ export default function useInputHandler(wordToGuess) {
     }
 
 
-    return { guesses, currentGuessIndex, handleGuessInput, currentGuess, isGameOver, currentGuessNumber };
+    return { guesses, handleGuessInput, isGameOver, currentGuessNumber, prevGuess };
 }

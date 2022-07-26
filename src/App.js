@@ -25,7 +25,7 @@ export default function App() {
     const [currentGuessRow, setCurrentGuessRow] = useState(0);
     const [currentGuessIndex, setCurrentGuessIndex] = useState(0); */
     //const [gameOver, setGameOver] = useState(false);
-    const { handleGuessInput, guesses, currentGuessIndex, currentGuess, isGameOver, currentGuessNumber } = useInputHandler(wordToGuess); 
+    const { handleGuessInput, guesses, isGameOver, currentGuessNumber, prevGuess } = useInputHandler(wordToGuess); 
 
 
     useEffect(() => {
@@ -34,15 +34,14 @@ export default function App() {
 
             setWordToGuess(WORDS.at(randomIndex).toUpperCase());
         }
-
-        //console.log(wordToGuess)
     }, [wordToGuess]);
 
     useEffect(() => {
         window.addEventListener('keyup', handleGuessInput)
 
         return () => window.removeEventListener('keyup', handleGuessInput)
-    }, [handleGuessInput])
+    }, [handleGuessInput]);
+
 
     /* useEffect(() => {
         window.addEventListener('keyup', handleGuessInput)
@@ -89,13 +88,11 @@ export default function App() {
 
             <Board guesses={guesses} />
 
-            <div>{currentGuess}</div>
+            {/* <div>{currentGuess}</div> */}
             
-            {/* <TextField value={currentGuess} sx={{ width: '20rem'}} /> */}
-            
-            <Keyboard handleGuessInput={handleGuessInput} />
+            <Keyboard handleGuessInput={handleGuessInput} prevGuess={prevGuess} />
 
-            <div>Current guess index: {currentGuessIndex}</div>
+            {/* <div>Current guess index: {currentGuessIndex}</div> */}
 
             {isGameOver && <div>Game is over</div>}
         </div>
