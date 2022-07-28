@@ -19,5 +19,5 @@ export default function Board({ guesses }) {
                 </div>
             ))}
         </div>
-    )
+    );
 }

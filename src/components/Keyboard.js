@@ -110,5 +110,5 @@ export default function Keyboard({ handleGuessInput, prevGuess }) {
                 <CustomButton onClick={() => handleGuessInput({ key: 'Backspace' })}>BACKSPACE</CustomButton>
             </div>
         </div>
-    )
+    );
 }

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export default function useInputHandler(wordToGuess) {
     const INITIAL_GUESSES = [
@@ -38,13 +38,13 @@ export default function useInputHandler(wordToGuess) {
                 
                 // map over the guess and evaluate it
                 rowCopy.map((pair, index) => {
-                    if(pair.key === wordToGuessCopy[index] && pair.color === '') {
+                    if(pair.key === wordToGuessCopy[index] && pair.color === '') { // letter match
                         pair.color = 'darkgreen';
                     }
-                    else if(wordToGuessCopy.includes(pair.key)) {
+                    else if(wordToGuessCopy.includes(pair.key)) { // letter doesn't match but exists in solution
                         pair.color = 'goldenrod';
                     }
-                    else {
+                    else { // letter is not in the solution
                         pair.color = 'gray';
                     }
 
