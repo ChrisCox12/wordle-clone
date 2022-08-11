@@ -17,19 +17,33 @@ export default function useInputHandler(wordToGuess) {
     const [currentGuessNumber, setCurrentGuessNumber] = useState(0);
     const [prevGuess, setPrevGuess] = useState([]);
 
+    const resetGame = () => {
+        setGuesses(INITIAL_GUESSES);
+        setCurrentGuessRow(0);
+        setCurrentGuessIndex(0);
+        setCurrentGuess('');
+        setIsGameOver(false);
+        setCurrentGuessNumber(0);
+        setPrevGuess([]);
+    }
 
-    const handleGuessInput = ({ key }) => {
-        let copy = [...guesses];
+    const handleGuessInput = (key) => {
+        let copy = [...guesses]; // copy of all guesses
+        const keyValue = key.key;
+        const keyCode = key.keyCode;
 
-        if(key === 'Backspace') { 
+        if(isGameOver) return; // if game is over, do nothing
+
+        if(keyValue === 'Backspace') { 
             setCurrentGuess(prev => prev.slice(0, -1)); //  cuts last letter from currentGuess
+            
             if(currentGuessIndex > 0) setCurrentGuessIndex(prev => prev - 1);
-            copy[currentGuessRow][currentGuessIndex - 1] = {key: '', color: ''};
+            
+            copy[currentGuessRow][currentGuessIndex - 1] = { key: '', color: '' };
         }
-        else if(key === 'Enter') {
+        else if(keyValue === 'Enter') {
             if(currentGuess.length === 5) {
                 let wordToGuessCopy = [...wordToGuess];  // copy the solution word
-                let guessCopy = [...currentGuess];
                 let rowCopy = [...copy[currentGuessRow]];  // copy the row that contains the current guess
 
                 if(currentGuess.toUpperCase() === wordToGuess.toUpperCase()) {
@@ -52,28 +66,41 @@ export default function useInputHandler(wordToGuess) {
                 });
                 
                 
-                copy[currentGuessRow] = rowCopy;
+                copy[currentGuessRow] = rowCopy; // add guess to copy of all guesses
                 setCurrentGuessRow(prev => prev + 1);
                 setCurrentGuessIndex(0);
                 setCurrentGuess('');
-                if(!isGameOver) setCurrentGuessNumber(prev => prev + 1);
-                //rowCopy.forEach(letter => checkHistory(letter))
-                //console.log(copy)
                 setPrevGuess(rowCopy);
+
+                if(!isGameOver) {
+                    // if last guess is entered, game over
+                    if((currentGuessNumber + 1) === 6) {
+                        setIsGameOver(true);
+                    }
+
+                    setCurrentGuessNumber(prev => prev + 1);
+                }
             }
         }
-        else {
-            if(currentGuess.length < 5) {
-                setCurrentGuess(prev => prev.concat(key).toUpperCase());
+        else if(keyCode) { // if input is coming from physical keyboard
+            // handle input if a letter is pressed
+            if(currentGuess.length < 5 && (keyCode >= 65 && keyCode <= 90)) {
+                setCurrentGuess(prev => prev.concat(keyValue).toUpperCase()); // sanitize and update current guess string
                 setCurrentGuessIndex(prev => prev + 1);
-                copy[currentGuessRow][currentGuessIndex].key = key.toUpperCase();
+                copy[currentGuessRow][currentGuessIndex].key = (keyValue).toUpperCase(); // sanitize and update elements in 2D table (the board)
             }
-            //console.log(key)
+        }
+        else { // if input is comming from virtual (in-app) keyboard
+            if(currentGuess.length < 5) {
+                setCurrentGuess(prev => prev.concat(keyValue).toUpperCase()); // sanitize and update current guess string
+                setCurrentGuessIndex(prev => prev + 1);
+                copy[currentGuessRow][currentGuessIndex].key = keyValue.toUpperCase(); // sanitize and update elements in 2D table (the board)
+            }
         }
 
-        setGuesses(copy);
+        setGuesses(copy); // add guess to board
     }
 
 
-    return { guesses, handleGuessInput, isGameOver, currentGuessNumber, prevGuess };
+    return { guesses, handleGuessInput, isGameOver, currentGuessNumber, prevGuess, resetGame };
 }
