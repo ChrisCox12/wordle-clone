@@ -3,7 +3,7 @@
 ## Table of contents
 
 - [Overview](#overview)
-  - [The challenge](#the-challenge)
+  - [The goal](#the-goal)
   - [Screenshots](#screenshots)
   - [Links](#links)
 - [My process](#my-process)
@@ -14,7 +14,7 @@
 
 ## Overview
 
-### The challenge
+### The Goal
 
 The goal of this project was to create a working clone of the Wordle game.
 
@@ -46,7 +46,7 @@ Users should be able to:
 - Custom CSS properties
 
 
-### What I learned
+### What I Learned
 
 - How to create and use custom hooks
 
